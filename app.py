@@ -14,15 +14,10 @@ import streamlit as st
 # dedent elimina la sangría del texto multilínea para que HTML no se muestre como código.
 from textwrap import dedent
 
-st.set_page_config(page_title="CSS 1", page_icon="🛢️", layout="centered")
-
-FONDO = "#9999b9"
-SUPERFICIE = "#1B476B"
-ACENTO = "#20E6C7"
-TEXTO = "#F7FBFF"
+st.set_page_config(page_title="CSS 2", page_icon="🛢️", layout="centered")
 
 # st.markdown inserta contenido en la app. Con unsafe_allow_html=True puede renderizar HTML/CSS.
-st.markdown(dedent(f"""
+st.markdown(dedent("""
 <style>
 /* ==========================================================
    GUÍA RÁPIDA DE CSS
@@ -42,18 +37,27 @@ st.markdown(dedent(f"""
    :hover          = estilo usado cuando el cursor está encima.
    ========================================================== */
 
-.stApp{{background:{FONDO};color:{TEXTO};}}
-h1,h2,h3,p,label{{color:{TEXTO} !important;}}
-.card{{
-    border:2px solid rgba(32,230,199,.55);
-    border-radius:30px; overflow:hidden; clip-path: inset(0 round 30px);
-    padding:24px; background:{SUPERFICIE}; box-shadow:0 14px 36px rgba(4,18,29,.22);
-}}
-.accent{{color:{ACENTO};font-weight:800;}}
+.stApp{background:#12304A;color:#F7FBFF;}
+h1,h2,h3,p,label{color:#F7FBFF !important;}
+.card{
+    border:2px solid rgba(32,230,199,.60);
+    border-radius:32px; overflow:hidden; clip-path: inset(0 round 32px);
+    padding:26px; background:#1B476B;
+    box-shadow:0 16px 40px rgba(4,18,29,.24);
+    transition:transform .24s ease, box-shadow .24s ease;
+}
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 20px 46px rgba(32,230,199,.18);
+}
+.value{color:#20E6C7;font-size:1.25rem;font-weight:800;}
 </style>
 """), unsafe_allow_html=True)
 
-st.markdown(dedent("""
+oil_bopd = st.slider("Petróleo [BOPD]", 100, 5000, 1200, 50)
+water_bwpd = st.slider("Agua [BWPD]", 0, 5000, 600, 50)
+
+st.markdown(dedent(f"""
 
 <!-- ========================================================
      GUÍA RÁPIDA DE HTML
@@ -65,10 +69,9 @@ st.markdown(dedent("""
      class = conecta un elemento HTML con una regla CSS.
      ======================================================== -->
 <div class="card">
-    <h1>Paleta visual <span class="accent">Oil & Gas</span></h1>
-    <p>CSS aplica fondo, color de texto, superficies y color de acento.</p>
+    <h1>Tarjeta curva</h1>
+    <p>Petróleo: <span class="value">{oil_bopd:,} BOPD</span></p>
+    <p>Agua: <span class="value">{water_bwpd:,} BWPD</span></p>
+    <p>En este ejemplo CSS controla bordes, sombras, radio y superficie.</p>
 </div>
 """), unsafe_allow_html=True)
-
-oil_bopd = st.slider("Petróleo [BOPD]", 100, 5000, 1200, 50)
-water_bwpd = st.slider("Agua [BWPD]", 0, 5000, 600, 50)
