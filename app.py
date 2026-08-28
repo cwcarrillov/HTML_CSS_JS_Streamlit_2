@@ -16,7 +16,7 @@ from textwrap import dedent
 
 st.set_page_config(page_title="CSS 1", page_icon="🛢️", layout="centered")
 
-FONDO = "#bad0b9"
+FONDO = "#9999b9"
 SUPERFICIE = "#1B476B"
 ACENTO = "#20E6C7"
 TEXTO = "#F7FBFF"
