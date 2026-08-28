@@ -14,7 +14,7 @@ import streamlit as st
 # dedent elimina la sangría del texto multilínea para que HTML no se muestre como código.
 from textwrap import dedent
 
-st.set_page_config(page_title="HTML 2", page_icon="🛢️", layout="centered")
+st.set_page_config(page_title="HTML 3", page_icon="🛢️", layout="centered")
 
 # st.markdown inserta contenido en la app. Con unsafe_allow_html=True puede renderizar HTML/CSS.
 st.markdown(dedent("""
@@ -63,8 +63,8 @@ st.markdown(dedent("""
      class = conecta un elemento HTML con una regla CSS.
      ======================================================== -->
 <div class="card">
-    <h1>Parámetros operacionales</h1>
-    <p>HTML también puede agrupar y ordenar los valores seleccionados en una tarjeta.</p>
+    <h1>Resultado con HTML</h1>
+    <p>Python calcula y HTML presenta el resultado en una tarjeta formal.</p>
 </div>
 """), unsafe_allow_html=True)
 
@@ -72,11 +72,18 @@ oil_bopd = st.slider("Petróleo [BOPD]", 100, 5000, 1200, 50)
 water_bwpd = st.slider("Agua [BWPD]", 0, 5000, 600, 50)
 oil_price = st.number_input("Precio [USD/bbl]", 1.0, 200.0, 75.0, 1.0)
 
-st.markdown(dedent(f"""
-<div class="card">
-    <h3>Parámetros activos</h3>
-    <p>Petróleo: <span class="value">{oil_bopd:,} BOPD</span></p>
-    <p>Agua: <span class="value">{water_bwpd:,} BWPD</span></p>
-    <p>Precio: <span class="value">${oil_price:.2f}/bbl</span></p>
-</div>
-"""), unsafe_allow_html=True)
+if st.button("Calcular"):
+    total = oil_bopd + water_bwpd
+    wc = water_bwpd / total * 100 if total else 0
+    monthly = oil_bopd * 30
+    revenue = monthly * oil_price
+
+    st.markdown(dedent(f"""
+    <div class="card">
+        <h2>Resultado operacional</h2>
+        <p>Fluido total: <span class="value">{total:,.0f} BFPD</span></p>
+        <p>Water Cut: <span class="value">{wc:.1f}%</span></p>
+        <p>Petróleo mensual: <span class="value">{monthly:,.0f} bbl</span></p>
+        <p>Ingreso bruto: <span class="value">${revenue:,.0f}</span></p>
+    </div>
+    """), unsafe_allow_html=True)
